@@ -1,0 +1,14 @@
+def primroots(p):
+    g = primitive_root(p)
+    znorder = p - 1
+    is_coprime = lambda x: gcd(x, znorder) == 1
+    good_odd_integers = filter(is_coprime, [1..p-1, step=2])
+    all_primroots = [power_mod(g, k, p) for k in good_odd_integers]
+    all_primroots.sort()
+    return all_primroots
+
+
+http://mathworld.wolfram.com/PrimitiveRoot.html
+http://www.youtube.com/watch?v=YPkKAEqH_5o
+http://kuniga.wordpress.com/2011/07/03/
+https://github.com/kunigami/Programming-Contests/blob/master/facebook-hacker-cup/2011/round2/scott-new-trick-karatsuba.cpp
