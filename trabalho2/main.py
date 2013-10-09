@@ -2,7 +2,7 @@
 import random
 import miller_rabin
 
-def check_prime():
+def checkIsPrime():
     number = raw_input("Give some number to check if is prime: ")
     precision = raw_input("Which precision?: ")
     if miller_rabin.probablyPrime(int(number), int(precision)):
@@ -10,7 +10,7 @@ def check_prime():
     else:
         print "\n\tThis is a compose number!\n"
 
-def generate_random_prime():
+def generateRandomPrime():
     bits = int(raw_input("Give the size of random number in bits: "))
     if bits < 2:
         print("\tMust be 2 bits or more!\n")
@@ -19,13 +19,13 @@ def generate_random_prime():
     random_number = random.getrandbits(bits)
     while (miller_rabin.probablyPrime(random_number, precision) == False):
         random_number = random.getrandbits(bits)
-    print "\tThe random number prime is: ", random_number, "\n\n"
+    print "\tThe random number probably prime is: ", random_number, "\n\n"
 
 if __name__ == '__main__':
     print("Miller Rabin Primality Test")
     functions = {
-            'prime':check_prime,
-            'random':generate_random_prime
+            'prime':checkIsPrime,
+            'random':generateRandomPrime
             }
     
     while (1):
