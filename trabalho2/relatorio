@@ -1,0 +1,77 @@
+O algoritmo de MillerRabin:
+
+Dado um numero inteiro impar n
+Represento n de forma fatorada em 2^r*s +1 com s sendo primo
+Feito isso devo escolher um numero randomico a numa faixa de 1 ate n-1
+
+Testo as condições:
+Para um j | 0 <= j <= r-1
+    a^s === 1 (mod n) ou 
+    a^2js === -1 (mod n) 
+
+Um número primo vai passar nos testes para todo valor a. Se não encontrar nenhum valor nesta faixa é provavel que seja um número composto.
+
+Exemplos:
+verificar se 33 é par
+decompondo 33 na forma de 2^r*s + 1
+
+33 = 2^r*s + 1
+32/s = 2^r 
+
+32/5 = 16
+2^ = 16
+
+s=2
+r=4
+
+33 = 2^r*s + 1
+33 = 2^4 = 16 * 2 = 32 + 1 = 33 
+
+a^s = 1 mod n
+a^2 = 1 mod n
+a^2 = 1 mod 33
+a^2  =  1
+1 = 1
+
+a^s*2*j = n-1 mod n
+a^2*2*j = n-1 mod n
+a^4j = n - 1
+
+para 0 <= j < r
+j=0
+1 = n - 1
+1 = 32
+1 = 32
+
+j=1
+a^4 = 32
+??
+
+j=2
+
+a^8 = 32
+??
+
+j=3
+a^12 = 32
+??
+
+Como não foi encontrado nenhum valor que satisfaçam as condições, é possivel do número 33 ser um número composto.
+
+Prova: 3 * 11 = 33
+
+
+Número primo 7
+7 = 2^t*s + 1
+6/s = 2^t
+6/6 = 2^0
+
+s = 6
+t = 0
+
+Fazendo os testes:
+
+a^s = 1 mod n
+a^6 = 1 mod 7
+1^6 = 1
+OK o número não é composto
