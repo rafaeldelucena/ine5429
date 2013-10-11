@@ -1,4 +1,4 @@
-O algoritmo de MillerRabin:
+O algoritmo de MillerRabin utiliza as propriedades dos pseudoprimos de Fermat:
 
 Dado um numero inteiro impar n
 Represento n de forma fatorada em (2^r)*s +1 com s sendo primo
@@ -46,18 +46,25 @@ a^4 = 32
 
 j=2
 a^4 = 32
-?? = não existe número inteiro que satisfaz
+a = ?? não existe número inteiro que satisfaz
 
 j=2
 
 a^8 = 32
-??
+a = ?? não existe número inteiro que satisfaz
+
 
 j=3
 a^12 = 32
-??
+a = ?? não existe número inteiro que satisfaz
 
-Como não foi encontrado nenhum valor que satisfaçam as condições, é possivel do número 33 ser um número composto.
+j=4
+a^(2*2*4) = 32
+a^16 = 32
+a = ?? não existe número inteiro que satisfaz
+
+
+Como não foi encontrado nenhum valor que satisfaçam as condições, é o número 33 não é primo.
 
 Prova: 3 * 11 = 33
 
