@@ -1,0 +1,50 @@
+Geração de Chaves
+
+1) Escolho dois números primos grandes, P and Q.
+Fazemos isso utilizando utilizando a geração de números randômicos no Python e o teste de primalidade de Miller Rabin.
+
+2) Calculamos N = P*Q
+
+3) Calculamos M = (P - 1)*(Q - 1)
+
+4) Escolhemos um número E coprimo a M, ou seja o máximo divisor comum igual a 1, utilizamos o algoritmo de Euclides. Para fazer estes calculos com números grandes é necessário utilizar o algoritmo extendido de Euclides, que recebe dois inteiros positivos a, b as e retorna uma tripla (g, x, y), tal que ax + by = g = gcd(a, b).
+
+5) Encontro D, tal que D % M = 1, isto é equivalente a encontrar D que satisfaça D*E = 1 + X*M, aonde X é qualquer inteiro. Podemos reescrever a fórmula de modo D = (1 + X*M) / E. 
+
+
+Ao final D será a chave privada e E será a chave pública. O número a ser criptografado deve ser menor que P e Q.
+
+Para Criptografar H:
+C = H^E % N
+
+Para Decriptar:
+H = C^D % N
+
+
+Exemplos:
+
+P = 3
+Q = 11
+N = 3 * 11 = 33
+M = (3 - 1)(11 - 1) = 20
+
+Encontramos E, tal que MDC(E, M) = 1
+para E = 2:
+    => MDC(2, 20) = 2
+para E = 3:
+    => MDC(3, 20) = 1 (3 é coprimo a 20)
+
+Encontramos D = (1 + X*M) / E. 
+para X = 0:
+    => D = 1 / 3 
+para X = 1:
+    => D = 21 / 3
+    => D = 7
+
+Criptografando a mensagem Z = 2:
+C = Z^E % N
+C = 2^3 % 33 = 8
+
+Decriptando:
+Z = C^D % N
+2 = 8^7 % 33 = 2
