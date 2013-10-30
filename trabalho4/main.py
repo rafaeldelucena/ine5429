@@ -9,6 +9,6 @@ if __name__=='__main__':
     print ('Public Key e = {0}'.format(e))
     print ('Private Key d = {0}'.format(d))
     cipher = rsa.encrypt(message, n, e, len(message))
-    print(cipher)
+    print "Cipher message:", cipher
     Amessage = rsa.decrypt(cipher, n, d, len(message))
-    print(Amessage)
+    print "Message:", Amessage
