@@ -1,1 +1,40 @@
-G é Raiz primitiva módulo N, se para cada número Y coprimo a N (que possuem máximo divisor comum = 1) seja congruente (se a diferença de a − b é um inteiro múltipo de N (ou N divide a − b) to a power of g modulo n
+O algoritmo para encontrar uma raiz primitive módulo é:
+Dado um número primo p
+faço a que está contido em [2, p - 1]
+encontro os fatores primos deste a:
+e testo a seguinte equação:
+
+a^(p-1)/q mod p != 1
+
+Se em todos os casos passar o teste a é raiz primitiva modulo p
+    
+Raízes primitivas módulo algum inteiro são muito utilizadas em protocolos de
+acordo de chaves.
+
+Exemplo
+
+Sendo P um numero primo; então B é uma raiz primitiva para P se as potencias
+de B (Bˆ1, Bˆ2, Bˆ3, ...) incluem todos os residuos do modulo de P (exceto 0).
+
+3 é raiz primitiva modulo 7 porque:
+3^1 mod7 = 3
+3^2 mod7 = 2
+3^3 mod7 = 6
+3^4 mod7 = 4
+3^5 mod7 = 5
+3^6 mod7 = 6
+Um contra exemplo:
+4^1 mod 5 = 4
+4^2 mod 5 = 1
+4^3 mod 5 = 4
+4^4 mod 5 = 1
+.: 4 não é uma raiz primitiva no módulo 5
+
+
+Implementação:
+
+Com uma implementação de fatorização de números inteiros trivial, levava muito tempo para se calcular a raíz primitiva.
+Assim foi utilizado uma e com um algoritmo Pollard-Brent [1], também é utilizado o algoritmo de Miller Rabin para gerar números primos, que serão utilizados como factores. Foi possível gerar uma raíz primitiva para números primos de 40 a 70 digitos com certa velocidade.
+
+
+ [1]. http://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm

@@ -1,11 +1,18 @@
 import factor
 import random
-import phi_function
 
-def primitiveRoot (number):
-    phi = phi_function.totient(number)
-    if _isPrimitiveRoot(phi, number):
-        return phi
+def primitiveRoot(n):
+    if n == 2:
+        return 1
+    for i in _onRange(2, n):
+        if _isPrimitiveRoot(i, n):
+            return i
+    return None
+
+def _onRange(start, stop):
+    while start < stop:
+        yield start
+        start += 1
 
 def _isPrimitiveRoot(a, p):    
     for f in factor.primeFactors(p-1):
