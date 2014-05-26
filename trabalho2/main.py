@@ -22,7 +22,7 @@ def generateRandomPrime():
     print "\tThe random number probably prime is: ", random_number, "\n\n"
 
 if __name__ == '__main__':
-    print("Miller Rabin Primality Test")
+    print("---- Miller Rabin Primality Test ----")
     functions = {
             'prime':checkIsPrime,
             'random':generateRandomPrime

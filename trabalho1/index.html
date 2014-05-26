@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Raiz primitiva módulo p</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css"  media="screen"/>
+        <link rel="stylesheet" type="text/css" hrf="js/jquery-ui.min.css" />
+    </head>
+    <body>
+    <div class="container">
+        <div class="row-fluid">
+            <h1>Raiz primitiva módulo p</h1>
+        </div>
+        <div class="row-fluid">
+            <fieldset>
+                <legend>Relatório</legend>
+                <div class="row-fluid">
+                </div>
+                <div class="row-fluid">
+                    <p>G é Raiz primitiva módulo N, se para cada número Y coprimo a N (que possuem máximo divisor comum = 1) seja congruente (se a diferença de a − b é um inteiro múltipo de N (ou N divide a − b)) a uma potência de G módulo N.</p>
+                    <h4>Exemplo:</h4>
+                    3 é raiz primitiva módulo 7 pois:
+                    3^1 mod7 = 3
+                    3^2 mod 7 = 2
+                    3^3 mod 7 = 6
+                    3^4 mod 7 = 4
+                    3^5 mod 7 = 5
+                    3^6 mod 7 = 6
+                    <h4>Contra exemplo:</h4>
+                    4^1 mod 5 = 4
+                    4^2 mod 5 = 1 
+                    4^3 mod 5 = 4
+                    4^4 mod 5 = 1
+                    .: 4 não é uma raiz primitiva no módulo 5</p>
+                    <p>Assim sendo, a diferença de uma raiz primitiva no módulo n para um número qualquer, é que para valores [1, N] mod N de um número qualquer os números podem se repetir, o que não é uma característica segura para usá-la em handshakes de comunicação.</p>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row-fluid">
+            <fieldset>
+            <legend>Implementação</legend>
+            </fieldset>
+                <div class="row-fluid">
+                </div>
+            <div class="row-fluid">
+                <p>O algoritmo utilizado foi: Dado um número de entrada primo P, teremos N=P-1 números coprimos (MDC(Ni,P) == 1) a P.</p>
+                <p>É necessário determinar todos os fatores primos Fi de N. Escolha um número A e calculo X = A^(N/Fi) mod P para todos os fatores primos. Se encontrar X == 1 não é uma raiz primitiva, do contrário é.
+                </p>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <fieldset>
+            <legend>Execução do Trabalho</legend>
+            </fieldset>
+                <div class="row-fluid">
+                </div>
+            <div class="row-fluid">
+                <p>Implementei um Script em Python para gerar as raizes primitives de um numero primo p, e um programa em C utilizando  a biblioteca GMP.</p>
+                <h4>Script:</h4>
+                <p>Para executar basta extrair o arquivo trabalho1.zip e executar num shell: python primitive_root.py</p>
+                <h4>Programa em C:</h4>
+                <p>Para compilar o programa em C, é necessário instalar a biblioteca GMP (GNU Multiprecision Library), em distribuições Debian basta: sudo apt-get install libgmp-dev </p>
+                <p>Próximo passo é compilar, um Makefile simplista acompanha os arquivos de código: make all para compilar e make clean para limpar</p>
+            </div>
+        </div>
+        <fieldset>
+        <legend>Código Fonte</legend>
+        </fieldset>
+        <div class="row-fluid">
+            <h4>C</h4>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800">#include &lt;gmp.h&gt;</span>
+<span style="color: #008800">#include &lt;stdio.h&gt;</span>
+
+<span style="color: #00BB00; font-weight: bold">int</span> <span style="color: #00A000">main</span>(<span style="color: #00BB00; font-weight: bold">int</span> argc, <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span> argv[])
+{
+    <span style="color: #00BB00; font-weight: bold">mpz_t</span> prime, phi, index; <span style="color: #008800; font-style: italic">/* working numbers */</span>
+    <span style="color: #AA22FF; font-weight: bold">if</span> (argc<span style="color: #666666">&lt;2</span>) { <span style="color: #008800; font-style: italic">/* not enough words */</span>
+        printf(<span style="color: #BB4444">&quot;Please supply a prime number.</span><span style="color: #BB6622; font-weight: bold">\n</span><span style="color: #BB4444">&quot;</span>);
+        <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">1</span>;
+    }
+    mpz_init_set_str (prime, argv[<span style="color: #666666">1</span>], <span style="color: #666666">10</span>); <span style="color: #008800; font-style: italic">/* Assume decimal integers */</span>
+    mpz_init_set_ui(index, <span style="color: #666666">2</span>);
+    mpz_init(phi);
+    mpz_sub_ui(phi, prime, <span style="color: #666666">1</span>); <span style="color: #008800; font-style: italic">/*phi = prime - 1*/</span>
+    <span style="color: #AA22FF; font-weight: bold">for</span> (;mpz_cmp(index, phi) <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span>; mpz_add_ui(index, index, <span style="color: #666666">1</span>)) { <span style="color: #008800; font-style: italic">/* Try all [2 .. phi] */</span>
+        <span style="color: #00BB00; font-weight: bold">mpz_t</span> div;
+        mpz_init_set_str(div, <span style="color: #BB4444">&quot;2&quot;</span>, <span style="color: #666666">10</span>);
+        <span style="color: #00BB00; font-weight: bold">mpz_t</span> number;
+        mpz_init_set(number, phi);
+        <span style="color: #00BB00; font-weight: bold">int</span> is_root <span style="color: #666666">=</span> <span style="color: #666666">1</span>;
+        <span style="color: #AA22FF; font-weight: bold">while</span>(mpz_cmp_ui(number, <span style="color: #666666">0</span>) <span style="color: #666666">!=</span> <span style="color: #666666">0</span>) { <span style="color: #008800; font-style: italic">/* With this loop we find all prime factors of phi*/</span>
+            <span style="color: #00BB00; font-weight: bold">mpz_t</span> one, result2;
+            mpz_init(result2);
+            mpz_init_set_ui(one, <span style="color: #666666">1</span>);
+            mpz_fdiv_r(result2, number, div);
+            <span style="color: #AA22FF; font-weight: bold">if</span>(mpz_cmp_ui(result2, <span style="color: #666666">0</span>) <span style="color: #666666">!=</span> <span style="color: #666666">0</span>) {
+                mpz_add_ui(div, div, <span style="color: #666666">1</span>);
+            } <span style="color: #AA22FF; font-weight: bold">else</span> {
+                mpz_fdiv_q(number, number, div);
+                <span style="color: #00BB00; font-weight: bold">mpz_t</span> exp, result;
+                mpz_init(exp);
+                mpz_init(result);
+                mpz_fdiv_q(exp, phi, div); <span style="color: #008800; font-style: italic">/* We have the prime factor on div, so calculates phi/prime factor i*/</span>          
+                mpz_powm(result, index, exp, prime); <span style="color: #008800; font-style: italic">/* a^(phi/prime factor i) mod prime */</span>
+                <span style="color: #AA22FF; font-weight: bold">if</span> (mpz_cmp_ui(result, <span style="color: #666666">1</span>) <span style="color: #666666">==</span> <span style="color: #666666">0</span>) { <span style="color: #008800; font-style: italic">/*if true isnt a primitive root*/</span>
+                    is_root <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
+                }
+                <span style="color: #AA22FF; font-weight: bold">if</span>(mpz_cmp_ui(number, <span style="color: #666666">1</span>) <span style="color: #666666">==</span> <span style="color: #666666">0</span>) {
+                    <span style="color: #AA22FF; font-weight: bold">break</span>;
+                }
+            }
+        }
+        <span style="color: #AA22FF; font-weight: bold">if</span> (is_root <span style="color: #666666">==</span> <span style="color: #666666">1</span>) {
+            printf(<span style="color: #BB4444">&quot;The first primitive root founded is %s</span><span style="color: #BB6622; font-weight: bold">\n</span><span style="color: #BB4444">&quot;</span>, mpz_get_str (<span style="color: #AA22FF">NULL</span>, <span style="color: #666666">10</span>, index));
+            <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">0</span>;
+        }
+    }
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">0</span>;
+}
+</pre></div>
+
+
+            <h4>Python</h4>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">math</span>
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">sys</span>
+
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">bigRange</span>(start, stop, step):
+    i <span style="color: #666666">=</span> start
+    <span style="color: #AA22FF; font-weight: bold">while</span> i <span style="color: #666666">&lt;</span> stop:
+        <span style="color: #AA22FF; font-weight: bold">yield</span> i
+        i <span style="color: #666666">+=</span> step
+
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">primeFactors</span>(n):
+    f, fs <span style="color: #666666">=</span> <span style="color: #666666">3</span>, <span style="color: #AA22FF">set</span>() <span style="color: #008800; font-style: italic"># Set for unique factors</span>
+    <span style="color: #AA22FF; font-weight: bold">while</span> n <span style="color: #666666">%</span> <span style="color: #666666">2</span> <span style="color: #666666">==</span> <span style="color: #666666">0</span>:
+        fs<span style="color: #666666">.</span>add(<span style="color: #666666">2</span>)
+        n <span style="color: #666666">/=</span> <span style="color: #666666">2</span>
+    <span style="color: #AA22FF; font-weight: bold">while</span> f <span style="color: #666666">*</span> f <span style="color: #666666">&lt;=</span> n:
+        <span style="color: #AA22FF; font-weight: bold">while</span> n <span style="color: #666666">%</span> f <span style="color: #666666">==</span> <span style="color: #666666">0</span>:
+            fs<span style="color: #666666">.</span>add(f)
+            n <span style="color: #666666">/=</span> f
+        f <span style="color: #666666">+=</span> <span style="color: #666666">2</span>
+    <span style="color: #AA22FF; font-weight: bold">if</span> n <span style="color: #666666">&gt;</span> <span style="color: #666666">1</span>: fs<span style="color: #666666">.</span>add(n)
+    <span style="color: #AA22FF; font-weight: bold">return</span> fs
+
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">primitiveRoots</span>(number):
+    roots <span style="color: #666666">=</span> []
+    <span style="color: #AA22FF; font-weight: bold">if</span> (number <span style="color: #666666">&lt;</span> <span style="color: #666666">2</span>):
+        <span style="color: #AA22FF; font-weight: bold">return</span> roots
+    phi <span style="color: #666666">=</span> number <span style="color: #666666">-</span> <span style="color: #666666">1</span>
+    factors <span style="color: #666666">=</span> primeFactors(phi)
+    <span style="color: #AA22FF; font-weight: bold">for</span> m <span style="color: #AA22FF; font-weight: bold">in</span> bigRange(<span style="color: #666666">2</span>, phi, <span style="color: #666666">1</span>):
+        is_root <span style="color: #666666">=</span> <span style="color: #AA22FF">True</span>
+        <span style="color: #AA22FF; font-weight: bold">for</span> p <span style="color: #AA22FF; font-weight: bold">in</span> factors:
+            <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #AA22FF">pow</span>(m, <span style="color: #AA22FF">int</span>(phi <span style="color: #666666">/</span> p), number) <span style="color: #666666">==</span> <span style="color: #666666">1</span>:
+                is_root <span style="color: #666666">=</span> <span style="color: #AA22FF">False</span>
+        <span style="color: #AA22FF; font-weight: bold">if</span> (is_root):
+            roots<span style="color: #666666">.</span>append(m)
+    <span style="color: #AA22FF; font-weight: bold">return</span> roots
+
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">main</span>():
+    number <span style="color: #666666">=</span> <span style="color: #AA22FF">int</span>(<span style="color: #AA22FF">raw_input</span>(<span style="color: #BB4444">&quot;Enter a prime number: &quot;</span>))
+    roots <span style="color: #666666">=</span> primitiveRoots(number)
+    <span style="color: #AA22FF; font-weight: bold">if</span> (roots):
+        <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;Find &quot;</span>, <span style="color: #AA22FF">len</span>(roots), <span style="color: #BB4444">&quot; primitive roots module &quot;</span>, number, <span style="color: #BB4444">&quot; = &quot;</span>, roots)
+
+<span style="color: #AA22FF; font-weight: bold">if</span> __name__ <span style="color: #666666">==</span> <span style="color: #BB4444">&quot;__main__&quot;</span>:
+    sys<span style="color: #666666">.</span>exit(main())
+</pre></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/primitive-roots.js"></script>
+    <script type="text/javascript" src="js/biginteger.js"></script>
+    <script type="text/javascript" src="js/schemeNumber.js"></script>
+    <script type="text/javascript" src="js/primitive-roots.js"></script>
+    </body>
+</html>
