@@ -1,4 +1,5 @@
 import random
+import sys
 
 """
 Decompoe um numero par na forma (2^r) * s
@@ -48,3 +49,44 @@ def probablyPrime(p, accuracy=100):
  
    return True
 
+
+def checkIsPrime():
+    number = raw_input("Give some number to check if is prime: ")
+    precision = raw_input("Which precision?: ")
+    if probablyPrime(int(number), int(precision)):
+        print "\n\tThe number is probably prime!\n"
+    else:
+        print "\n\tThis is a compose number!\n"
+
+def generateRandomPrime():
+    bits = int(raw_input("Give the size of random number in bits: "))
+    if bits < 2:
+        print("\tMust be 2 bits or more!\n")
+        return
+    precision = int(raw_input("Which precision to test primality? "))
+    random_number = random.getrandbits(bits)
+    while (probablyPrime(random_number, precision) == False):
+        random_number = random.getrandbits(bits)
+    print "\tThe random number probably prime is: ", random_number, "\n\n"
+
+def main():
+    def quit():
+        sys.exit()
+
+    print("---- Miller Rabin Primality Test ----")
+    functions = {
+            'prime':checkIsPrime,
+            'random':generateRandomPrime,
+            'exit':quit
+            }
+    
+    while (1):
+        print ("Type random will try generates a random or prime for check if is prime\n")
+        type = raw_input("Choose random, prime or exit: ")
+        if type not in functions.keys():
+            print ("Invalid choice!")
+            continue
+        functions[type]()
+
+if __name__ == '__main__':
+    sys.exit(main())
