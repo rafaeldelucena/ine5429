@@ -57,7 +57,6 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \lhead{}
 \chead{}
 \rhead{}
-\lfoot{Teste de Primalidade\textnumero{} 3}
 \cfoot{}
 \rfoot{Page \thepage}
 \renewcommand{\headrulewidth}{0pt}
@@ -68,7 +67,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \usepackage{listings}
 \lstset{
     language=Python,
-    basicstyle=\ttfamily\small,
+    basicstyle=\ttfamily\scriptsize,
     aboveskip={1.0\baselineskip},
     belowskip={1.0\baselineskip},
     columns=fixed,
@@ -95,7 +94,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \begin{document}
 
-\title{Teste de Primalidade\textnumero{} 3}
+\title{Teste de Primalidade}
 
 \author{Rafael de Lucena Valle, Universidade Federal de Santa Catarina}
 
@@ -104,7 +103,56 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \maketitle
 
 \section*{Teste de Primalidade de Miller Rabin}
-Números primos são muito utilizados em sistemas de segurança computacional. Entretanto, eles são somente úteis se tiverem centenas de dígitos. Não se conhece um método para gerar diretamente números primos grandes, mas existem métodos para se verificar, alguns probabilísticos, se um dado número grande é primo. Dentre os probabilísticos, um dos mais conhecidos e usados é o teste de primalidade de Miller-Rabin. Você deve desenvolver um programa em Java implementando este método. Deve ser possível, utilizando este programa, gerar números primos de pelos menos 100 dígitos decimais. Use a classe BigInteger para trabalhar com números grandes. Para gerar um número primo, primeiramente gere um número aleatório grande. Então, usando o Muller-Rabin, teste para ver se ele é provavelmente primo. Se não for, gere outro número aleatório, até que consiga um número primo.
+Números primos são muito utilizados em sistemas de segurança computacional. Entretanto, eles são somente úteis se tiverem centenas de dígitos. Não se conhece um método para gerar diretamente números primos grandes, mas existem métodos para se verificar, alguns probabilísticos, se um dado número grande é primo.
+Dentre os probabilísticos, um dos mais conhecidos e usados é o teste de primalidade de Miller-Rabin, que utiliza as propriedades dos pseudoprimos de Fermat.
+
+
+\section*{Algoritmo}
+\begin{itemize}
+    \item Dado um numero inteiro impar n, represento-o de forma fatorada em $(2^r)*s + 1$ com s sendo primo.
+    \item Escolhe-se um numero randomico a numa faixa de 2 ate n-1.
+    \item Testo as condições $a^s = 1 \mod n$ ou $a^2js = -1 \mod n$ para cada $j | 0 <= j <= r-1$
+\end{itemize}
+Um número primo vai passar nos testes para todo valor a. Se não encontrar nenhum valor nesta faixa é provavel que seja um número composto.
+
+\section*{Exemplos}
+
+Para ilustrar a execução do algoritmo, vou mostrar um número composto 3 um número primo.
+
+\subsection*{Número composto}
+Verificar se 33 é primo. decompondo 33 na forma de $(2^r)*s + 1$ com r ímpar:\\
+Fazendo a decomposição de n para $(2^r)*s$:\\
+32 é divido por 2, 5 vezes\\
+$33 = (2^5)*1 + 1$, $s=1$ e $r=5$\\
+a inteiro na faixa [2, n-1]\\
+$a^s = 1 \mod n$, $a^1 = 1 \mod n$, $a^1 = 1 \mod 33$, $a^1  = 1$\\
+$a^1 = 1$ não existe número inteiro maior que 1 que satisfaz\\
+$a^(s*2*j) = n-1 \mod n$, $a^(2*2*j) = n-1 \mod n$, $a^4j = n - 1$\\
+para $0 <= j < r$\\
+$j=0$\\
+$1 = n - 1$, $1 = 32$, $1 \neq 32$, $j=1$, $a^4 = 32$\\
+$a = ??$ não existe número inteiro que satisfaz\\
+$j=2$\\
+$a^4 = 32$\\
+$a = ??$ não existe número inteiro que satisfaz\\
+$j=2$\\
+$a^8 = 32$\\
+$a = ??$ não existe número inteiro que satisfaz\\
+$j=3$\\
+$a^12 = 32$\\
+$a = ??$ não existe número inteiro que satisfaz\\
+$j=4$\\
+$a^(2*2*4) = 32$, $a^16 = 32$\\
+$a = ??$ não existe número inteiro que satisfaz, não foi encontrado nenhum valor que satisfaçam as condições, é o número 33 não é primo. Prova: $3 * 11 = 33$
+
+\subsection*{Número Primo}
+Testando um número primo $7 = 2^t*s + 1$\\
+$6/s = 2^t$, $6/6 = 2^0$, $s = 6$ e $t = 0$\\
+Fazendo os testes:
+$a^s = 1 \mod n$, $a^6 = 1 \mod 7$, $1^6 = 1$\\
+OK o número não é composto
+
+\section*{Código}
 
 \begin{lstlisting}[label={list:first},caption=Miller Rabin prime test em Python.]
 import random
