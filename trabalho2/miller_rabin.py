@@ -51,9 +51,12 @@ def probablyPrime(p, accuracy=100):
 
 
 def checkIsPrime():
-    number = raw_input("Give some number to check if is prime: ")
+    number = int(raw_input("Give some number to check if is prime: "))
+    if (number == 1):
+        print("\n\tOne is prime!\n")
+        sys.exit()
     precision = raw_input("Which precision?: ")
-    if probablyPrime(int(number), int(precision)):
+    if (probablyPrime(number, int(precision))):
         print "\n\tThe number is probably prime!\n"
     else:
         print "\n\tThis is a compose number!\n"
@@ -70,14 +73,11 @@ def generateRandomPrime():
     print "\tThe random number probably prime is: ", random_number, "\n\n"
 
 def main():
-    def quit():
-        sys.exit()
-
     print("---- Miller Rabin Primality Test ----")
     functions = {
             'prime':checkIsPrime,
             'random':generateRandomPrime,
-            'exit':quit
+            'exit':sys.exit
             }
     
     while (1):
