@@ -4,7 +4,7 @@ import sys
 """
 Decompoe um numero par na forma (2^r) * s
 """
-def _decomposeBaseTwo(n):
+def decomposeBaseTwo(n):
     exponentOfTwo = 0
     while n % 2 == 0:
       n = n/2
@@ -17,7 +17,7 @@ Verifica as condicoes
     Se (a^s === 1 (mod n) ou a^2js === -1 (mod n) 
     para um j | 0 <= j <= r-1
 """
-def _fillPrimeConditions(candidateNumber, p, exponent, remainder):
+def fillPrimeConditions(candidateNumber, p, exponent, remainder):
    candidateNumber = pow(candidateNumber, remainder, p)
  
    if candidateNumber == 1 or candidateNumber == p - 1:
@@ -40,11 +40,11 @@ def probablyPrime(p, accuracy=100):
    if p < 2: return False
  
    numTries = 0
-   exponent, remainder = _decomposeBaseTwo(p - 1)
+   exponent, remainder = decomposeBaseTwo(p - 1)
  
    for _ in range(accuracy):
       candidateNumber = random.randint(2, p - 2)
-      if _fillPrimeConditions(candidateNumber, p, exponent, remainder):
+      if fillPrimeConditions(candidateNumber, p, exponent, remainder):
          return False
  
    return True
