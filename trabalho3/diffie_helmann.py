@@ -1,6 +1,7 @@
 import random
 import sys
 import math
+import time
 
 """
 Decompoe um numero par na forma (2^r) * s
@@ -66,7 +67,7 @@ def generateRandomPrime(bits, precision):
     random_number = random.getrandbits(bits)
     while (probablyPrime(random_number, precision) == False):
         random_number = random.getrandbits(bits)
-        return random_number
+    return random_number
 
 
 def bigRange(start, stop, step):
@@ -89,38 +90,52 @@ def primeFactors(n):
     return fs
 
 def primitiveRoots(number):
-    roots = []
-    if (number < 2):
-        return roots
-    phi = number - 1
-    factors = primeFactors(phi)
-    for m in bigRange(2, phi, 1):
-        is_root = True
-        for p in factors:
-            if pow(m, int(phi / p), number) == 1:
-                is_root = False
-        if (is_root):
-            roots.append(m)
-    return roots
+    if number:
+        if number == 2:
+            yield 1
+        if number == 3:
+            yield 2
+        phi = number - 1
+        factors = primeFactors(phi)
+        for m in bigRange(2, phi, 1):
+            is_root = True
+            for p in factors:
+                if pow(m, int(phi / p), number) == 1:
+                    is_root = False
+            if (is_root):
+                yield m
+
+def diffie_helmann(bits, precision):
+    start = time.time()
+    prime = generateRandomPrime(bits, precision)
+    time_prime = time.time() - start
+    print "prime", prime
+    print "generateRandomPrime:", time_prime 
+    for root in primitiveRoots(prime):
+        print "primitive root:", root
+        if root == 2:
+            break
+        XA = random.getrandbits(bits - 1)
+        XB = random.getrandbits(bits - 1)
+        YA = pow(root, XA, prime)
+        YB = pow(root, XB, prime)
+
+        K1 = pow(YB, XA, prime)
+        K2 = pow(YA, XB, prime)
+
+        print "Private Keys XA:", prime, root, XA, "and XB:", prime, root, XB
+        print "Public Keys YA:", YA, "and YB:", YB
+        print "K1:", K1, "K2:", K2
+        return
+
 
 def main():
-    bits = 10
-    precision = 100
-    prime = generateRandomPrime(bits, precision)
-    roots = primitiveRoots(prime)
-    root = roots[0]
-    if root == 2:
-        root = roots[1]
-    XA = random.getrandbits(bits - 1)
-    XB = random.getrandbits(bits - 1)
-    YA = pow(root, XA, prime)
-    YB = pow(root, XB, prime)
-
-    K1 = pow(YB, XA, prime)
-    K2 = pow(YA, XB, prime)
-
-    print "K1:", K1, "K2:", K2
-
+    bits = int(sys.argv[1])
+    precision = int (sys.argv[2])
+    start = time.time()
+    diffie_helmann(bits, precision)
+    total = time.time() - start
+    print "Total time:", total 
 
 if __name__ == '__main__':
     main()
