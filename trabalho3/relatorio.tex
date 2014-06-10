@@ -131,11 +131,11 @@ O esquema de acordo de chaves Diffie-Helman não está limitado à interação e
     
     Bob então calcula $(g^a)^{|G|-b} = g^{a(|G|-b)} = g^{a|G|-ab} = g^{a|G|}g^{-ab} = ((g^{|G|})^a)g^{-ab}=(1^a)g^{-ab}=g^{-ab}=(g^{ab})^{-1}$.
     
-    Quando Alice envia a Bob a mensagem encriptada, $mg^{ab}$, Bob aplica $(g^ab)^{-1}$ e recupera $mg^{ab}(g^{ab})^{-1} = m(1) = m$.
+    Quando Alice envia a Bob a mensagem encriptada, $mg^{ab}$, Bob aplica $(g^{ab})^{-1}$ e recupera $mg^{ab}(g^{ab})^{-1} = m(1) = m$.
 
 \subsection*{Alice Bob e Carol}
 
-Alice, Bob e Carol participam de um acordo do tipo Diffie-Hellman de acordo com o exeomplo a seguir, onde todas as operações tomadas com módulo p:
+Alice, Bob e Carol participam de um acordo do tipo Diffie-Hellman de acordo com o exeomplo a seguir, onde todas as operações tomadas com módulo $p$:
 
     Os participantes selecionam os parâmetros iniciais do algoritmo $p$ e $g$;
     Os participantes geram suas respectivas chaves privadas, que chamaremos $a$, $b$ e $c$.
@@ -273,9 +273,7 @@ def primitiveRoots(number):
 
 def diffie_helmann(bits, precision):
     prime = generateRandomPrime(bits, precision)
-    print "prime", prime
     for root in primitiveRoots(prime):
-        print "primitive root:", root
         if root == 2:
             break
         XA = random.getrandbits(bits - 1)
@@ -285,10 +283,6 @@ def diffie_helmann(bits, precision):
 
         K1 = pow(YB, XA, prime)
         K2 = pow(YA, XB, prime)
-
-        print "Private Keys XA:", prime, root, XA, "and XB:", prime, root, XB
-        print "Public Keys YA:", YA, "and YB:", YB
-        print "K1:", K1, "K2:", K2
         return
 
 

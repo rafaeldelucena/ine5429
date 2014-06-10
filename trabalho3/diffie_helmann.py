@@ -1,7 +1,6 @@
 import random
 import sys
 import math
-import time
 
 """
 Decompoe um numero par na forma (2^r) * s
@@ -51,18 +50,6 @@ def probablyPrime(p, accuracy=100):
  
    return True
 
-
-def checkIsPrime():
-    number = int(raw_input("Give some number to check if is prime: "))
-    if (number == 1):
-        print("\n\tOne is prime!\n")
-        sys.exit()
-    precision = raw_input("Which precision?: ")
-    if (probablyPrime(number, int(precision))):
-        print "\n\tThe number is probably prime!\n"
-    else:
-        print "\n\tThis is a compose number!\n"
-
 def generateRandomPrime(bits, precision):
     random_number = random.getrandbits(bits)
     while (probablyPrime(random_number, precision) == False):
@@ -106,13 +93,8 @@ def primitiveRoots(number):
                 yield m
 
 def diffie_helmann(bits, precision):
-    start = time.time()
     prime = generateRandomPrime(bits, precision)
-    time_prime = time.time() - start
-    print "prime", prime
-    print "generateRandomPrime:", time_prime 
     for root in primitiveRoots(prime):
-        print "primitive root:", root
         if root == 2:
             break
         XA = random.getrandbits(bits - 1)
@@ -123,23 +105,25 @@ def diffie_helmann(bits, precision):
         K1 = pow(YB, XA, prime)
         K2 = pow(YA, XB, prime)
 
-        print "Prime P", prime,
-        print "Primitive Root Mod P", root
+        print "--------------------------------------------------------"
+        print "Prime P:", prime
+        print "Primitive Root Mod P:", root
         print "Private Keys XA:", XA, "and XB:", XB
         print "Public Keys YA:", YA, "and YB:", YB
         print "K1:", K1, "K2:", K2
+        print "--------------------------------------------------------"
+
         return
 
 
 def main():
-    bits = int(sys.argv[1])
-    #bits = int(raw_input("Give the size of random number in bits: "))
-    #precision = int(raw_input("Which precision to test primality? "))
-    precision = int (sys.argv[2])
-    start = time.time()
+    bits = int(raw_input("Give the size of prime random number in bits: "))
+    if (bits < 2):
+        return
+    precision = int(raw_input("Which precision to test primality? "))
+    if (bits < 1):
+        return
     diffie_helmann(bits, precision)
-    total = time.time() - start
-    print "Total time:", total 
 
 if __name__ == '__main__':
     main()
