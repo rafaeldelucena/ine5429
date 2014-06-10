@@ -123,7 +123,9 @@ def diffie_helmann(bits, precision):
         K1 = pow(YB, XA, prime)
         K2 = pow(YA, XB, prime)
 
-        print "Private Keys XA:", prime, root, XA, "and XB:", prime, root, XB
+        print "Prime P", prime,
+        print "Primitive Root Mod P", root
+        print "Private Keys XA:", XA, "and XB:", XB
         print "Public Keys YA:", YA, "and YB:", YB
         print "K1:", K1, "K2:", K2
         return
@@ -131,6 +133,8 @@ def diffie_helmann(bits, precision):
 
 def main():
     bits = int(sys.argv[1])
+    #bits = int(raw_input("Give the size of random number in bits: "))
+    #precision = int(raw_input("Which precision to test primality? "))
     precision = int (sys.argv[2])
     start = time.time()
     diffie_helmann(bits, precision)
