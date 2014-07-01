@@ -53,6 +53,8 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 % custom footers and headers
 \usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{float}
 \pagestyle{fancy}
 \lhead{}
 \chead{}
@@ -106,14 +108,34 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \section*{Definição}
 
-O Bitcoin é uma moeda digital, que utiliza algoritmos criptograficos para validar as transações e usa meios de recompensa para reduzir os ataques.
-A idéia é fomentar nodos que ajudem a validar as transações, não precisando de uma instituição que garanta que não haja duplo-pagamento.
+O Bitcoin é uma moeda digital onde transações são enviados diretamente de uma parte a outra e utiliza algoritmos criptográficos para validar as transações e meios de recompensa para reduzir os ataques. Ao contrário das transações tradicionais que utilizam instituições financeiras como terceiro confiável no processo de pagamento eletrônico.
 
-\section*{Cadeia de Blocos}
+Desta forma reduz custos entre transações e habilita tipos microtransações que não eram possíveis devido ao alto custo relativo.
+
+Para prevenir o problema de duplo gasto, o Bitcoin propõe um servidor timestamp duma rede distribuída peer-to-peer que gere um uma ordem cronológica das transações.  O sistema é seguro enquanto os nós honestos coletivamente controlarem mais CPU power que um grupo de atacantes. A idéia é fomentar nodos que ajudem a validar as transações, não precisando de uma instituição que garanta que não haja duplo-pagamento.
+\cite{nakamoto2008bitcoin}
+\section*{Moeda}
+A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda assina um hash da transação antiga e a chave pública do próximo dono e adiciona isso no final de cada moeda. O problema é que o pagador não pode verificar se o atual dono não gastou duplamente a moeda. Abaixo \ref{bitcoin} uma visão geral do Bitcoin.
+
+
+\begin{figure}[H]
+   \label{bitcoin}
+   \centering
+   \includegraphics[width=0.8\textwidth]{images/coin.png}
+   \caption{Modelo da moeda digital \cite{nakamoto2008bitcoin}.}
+\end{figure}
 
 \section*{Transações}
+Para resolver o problema do gasto duplo o Bitcoin, as transações são publicamente anunciadas e são necessários participantes que concordem em uma história única da ordem em que são recebidas. O futuro dono precisa da prova que no momento da transação a maioria dos nós concordam que é o primeiro pagamento da moeda.
+
+Para cifrar as transações utiliza algoritmo de Assinatura Digital de Curvas Elípticas (ECDSA), assinando a alteração da propriedade possui as entradas: registros das transações antigas e a saída é um registro determinando o novo dono do Bitcoin, que será utilizado como entrada para futuras transações.
+
+A solução do Bitcoin utiliza um servidor de timestamp que funciona usando um hash do bloco de iten
 \section*{Mineração}
 \section*{Monetização}
 \section*{Carteira Digital}
+
+\bibliography{relatorio}{}
+\bibliographystyle{plain}
 
 \end{document}
