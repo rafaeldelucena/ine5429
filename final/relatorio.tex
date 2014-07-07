@@ -108,14 +108,12 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \section*{Definição}
 
-O Bitcoin é uma moeda digital onde transações são enviados diretamente de uma parte a outra e utiliza algoritmos criptográficos para validar as transações e meios de recompensa para reduzir os ataques. Ao contrário das transações tradicionais que utilizam instituições financeiras como terceiro confiável no processo de pagamento eletrônico.
+O Bitcoin é uma moeda digital onde transações são enviados diretamente de uma parte a outra e utiliza algoritmos criptográficos para validar as transações e meios de recompensa para reduzir os ataques. Ao contrário das transações tradicionais que utilizam instituições financeiras como terceiro confiável no processo de pagamento eletrônico. Desta forma reduz custos entre transações e habilita tipos microtransações que não eram possíveis devido ao alto custo relativo.
 
-Desta forma reduz custos entre transações e habilita tipos microtransações que não eram possíveis devido ao alto custo relativo.
-
-Para prevenir o problema de duplo gasto, o Bitcoin propõe um servidor timestamp duma rede distribuída peer-to-peer que gere um uma ordem cronológica das transações.  O sistema é seguro enquanto os nós honestos coletivamente controlarem mais CPU power que um grupo de atacantes. A idéia é fomentar nodos que ajudem a validar as transações, não precisando de uma instituição que garanta que não haja duplo-pagamento.
+Para prevenir o problema de duplo gasto, o Bitcoin propõe um servidor timestamp duma rede distribuída peer-to-peer que gere um uma ordem cronológica das transações. O sistema é seguro enquanto os nós honestos coletivamente controlarem mais CPU power que um grupo de atacantes. A idéia é fomentar nodos que ajudem a validar as transações, não precisando de uma instituição que garanta que não haja duplo-pagamento.
 \cite{nakamoto2008bitcoin}
 \section*{Moeda}
-A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda assina um hash da transação antiga e a chave pública do próximo dono e adiciona isso no final de cada moeda. O problema é que o pagador não pode verificar se o atual dono não gastou duplamente a moeda. Abaixo \ref{bitcoin} uma visão geral do Bitcoin.
+A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda assina publicamente um hash da transação antiga e a chave pública do próximo dono e adiciona isso no final de cada moeda. Existe um problema na qual o pagador não pode verificar se o atual dono não gastou duplamente a moeda. Abaixo \ref{bitcoin} uma visão geral do Bitcoin.
 
 
 \begin{figure}[H]
@@ -126,12 +124,28 @@ A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda as
 \end{figure}
 
 \section*{Transações}
-Para resolver o problema do gasto duplo o Bitcoin, as transações são publicamente anunciadas e são necessários participantes que concordem em uma história única da ordem em que são recebidas. O futuro dono precisa da prova que no momento da transação a maioria dos nós concordam que é o primeiro pagamento da moeda.
+Para resolver o problema do gasto duplo o Bitcoin, as transações são publicamente anunciadas e são necessários participantes que concordem em uma história única da ordem em que são recebidas. O futuro dono precisa da prova que no momento da transação a maioria dos nós concordam que é o primeiro pagamento desta moeda do dono.
 
-Para cifrar as transações utiliza algoritmo de Assinatura Digital de Curvas Elípticas (ECDSA), assinando a alteração da propriedade possui as entradas: registros das transações antigas e a saída é um registro determinando o novo dono do Bitcoin, que será utilizado como entrada para futuras transações.
+Para cifrar as transações o algoritmo utilizado é o  ECDSA, Assinatura Digital de Curvas Elípticas, assinando a alteração da propriedade possui as entradas: registros das transações antigas e a saída é um registro determinando o novo dono do Bitcoin, que será utilizado como entrada para futuras transações.
 
-A solução do Bitcoin utiliza um servidor de timestamp que funciona usando um hash do bloco de iten
+A solução do Bitcoin utiliza um servidor de timestamp que funciona gerando um hash do bloco de itens e publica este hash. Cada timestamp inclue o timestamp anterior formando uma cadeia.
+
+Para implementar um servidor de timestamp distribuído é utilizado um sistema similar ao Hashcash, para proteger a rede e manter a rede decentralizada sem autoridade central. O trabalho requerido em média é exponencial ao número de bits zero. Uma vez que o trabalho satisfaz a prova de trabalho o bloco, a prova de trabalho é um voto por CPU.
+
+Para compensar o aumento da velocidade de hardware durante o tempo, a dificuldade da prova de trabalho pode ser determinada alterando o número médio de blocos por hora. Os passos para executar a rede são:
+\begin{itemize}
+    \item Novas transações são comunicadas para todos os nós.
+    \item Cada nó coleta novas transações para o bloco.
+    \item Cada nó trabalha em encontrar a prova de trabalho de seu bloco.
+    \item Quando um nó encontra um prova de trabalho, envia broadcast para todos os nodos.
+    \item Nós aceitam o bloco apenas se todas as transações são validas e não foram gastos.
+    \item Nós expressam a aceitação do bloco criando no próximo bloco da cadeia usando o hash de aceitação do bloco anterior.
+\end{itemize}
+
+Os nós sempre consideram a cadeia mais longa como correta no caso de dois nós fizeram broadcast simultâneo de diferentes versões do próximo bloco. Alguns podem receber uma ou outra primeiro, neste caso ele trabalha na primeira recebida porém salva a próxima caso a cadeira se torne maior. O broadcast necessita alcançar um número minimo de nós.
+
 \section*{Mineração}
+Para criar novas moedas é necessário que seja a primeira transação de um bloco.
 \section*{Monetização}
 \section*{Carteira Digital}
 
