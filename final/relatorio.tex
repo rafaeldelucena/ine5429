@@ -126,7 +126,20 @@ A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda as
 \section*{Transações}
 Para resolver o problema do gasto duplo o Bitcoin, as transações são publicamente anunciadas e são necessários participantes que concordem em uma história única da ordem em que são recebidas. O futuro dono precisa da prova que no momento da transação a maioria dos nós concordam que é o primeiro pagamento desta moeda do dono.
 
-Para cifrar as transações o algoritmo utilizado é o  ECDSA, Assinatura Digital de Curvas Elípticas, assinando a alteração da propriedade possui as entradas: registros das transações antigas e a saída é um registro determinando o novo dono do Bitcoin, que será utilizado como entrada para futuras transações.
+Para cifrar as transações o algoritmo utilizado é o  ECDSA, Assinatura Digital de Curvas Elípticas, assinando a alteração da propriedade possui as entradas: registros das transações antigas e a saída é um registro determinando o novo dono do Bitcoin, que será utilizado como entrada para futuras transações, abaixo um exemplo.
+
+\begin{lstlisting}[Exemplo de uma transação Bitcoin com uma entrada e uma saída apenas]
+Input:
+Previous tx: f5d8ee39a430901c91a5917b9f2dc19d6d1a0e9cea205b009ca73dd04470b9a6
+Index: 0
+scriptSig: 304502206e21798a42fae0e854281abd38bacd1aeed3ee3738d9e1446618c4571d10
+90db022100e2ac980643b0b82c0e88ffdfec6b64e3e6ba35e7ba5fdd7d5d6cc8d25c6b241501
+
+Output:
+Value: 5000000000
+scriptPubKey: OP_DUP OP_HASH160 404371705fa9bd789a2fcd52d2c580b65d35549d
+OP_EQUALVERIFY OP_CHECKSIG
+\end{lstlisting}
 
 A solução do Bitcoin utiliza um servidor de timestamp que funciona gerando um hash do bloco de itens e publica este hash. Cada timestamp inclue o timestamp anterior formando uma cadeia.
 
@@ -147,9 +160,26 @@ Os nós sempre consideram a cadeia mais longa como correta no caso de dois nós 
 \section*{Mineração}
 Para criar novas moedas é necessário que seja a primeira transação de um bloco.
 \section*{Monetização}
+
+Existem serviços de câmbio do Bitcoin para diversas moedas inclusive para outras \textit{crypto-currences}.
+
+Os o site \cite{trade} possui uma extensa lista dos bens de consumo possíveis de serem comprados por Bitcoins.
+
 \section*{Carteira Digital}
 
+\section*{Crítica}
+
+Os principais problemas do Bitcoin são:
+
+Espaço de armazenamento: todos os nós precisam armazenar todas as transações.
+
+
 \bibliography{relatorio}{}
+http://news.slashdot.org/story/14/01/07/2134242/how-to-create-your-own-cryptocurrency
+http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/
+https://en.bitcoin.it/wiki
+http://www.ournem.com
+
 \bibliographystyle{plain}
 
 \end{document}
