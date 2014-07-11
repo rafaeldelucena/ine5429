@@ -98,9 +98,9 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \title{Distributed Crypto Currency: Bitcoin}
 
-\author{Rafael de Lucena Valle, Universidade Federal de Santa Catarina}
+\author{8232805 - Rafael de Lucena Valle, Universidade Federal de Santa Catarina}
 
-\date{30/06/2014}
+\date{\today}
 
 \maketitle
 
@@ -162,19 +162,24 @@ Para compensar o aumento da velocidade de hardware durante o tempo, a dificuldad
 
 Os nós sempre consideram a cadeia mais longa como correta no caso de dois nós fizeram broadcast simultâneo de diferentes versões do próximo bloco. Alguns podem receber uma ou outra primeiro, neste caso ele trabalha na primeira recebida porém salva a próxima caso a cadeira se torne maior. O broadcast necessita alcançar um número minimo de nós \cite{nakamoto2008bitcoin}.
 
-\section*{Legislação}
-\subsection*{No Brasil}
+Geralmente não são cobrado taxas para transações que envolvem Bitocoins, porém quando os valores são muito pequenos (menores que 0.01 XBT, ou 0.01 satoshis) ou muito novas elas não são gratuitas. Quando isto acontece a taxa recolhida é repassada aos nós que estão minerando, para incentivar a mantenção da rede.
 
-Não existe legislação específica e decisões tomadas pelos tribunais limitam-se a casos de cartões de crédito ou transações bancárias na Internet. Se ambas as partes concordam que determinado produto ou serviço será pago por meio de Bitcoins e não em moeda corrente, trata-se de um contrato entre elas, com plena validade legal \cite{pascale}.
+Site para visualização em tempo real das transações que ocorrem \cite{realTime} na rede Bitcoin.
 
-A conversão de Bitcoins em dinheiro real geralmente implica na utilização de corretores estrangeiros, cuja reputação ainda é desconhecida. Além disso os tribunais terão grande dificuldade em compreender o conceito de uma moeda criptográfica \cite{pascale}.
+\section*{Legislação no Brasil}
+
+Não existe legislação específica e decisões tomadas pelos tribunais limitam-se a casos de cartões de crédito ou transações bancárias na Internet. Se ambas as partes concordam que determinado produto ou serviço será pago por meio de Bitcoins e não em moeda corrente, trata-se de um contrato entre elas, com plena validade legal.
+
+A conversão de Bitcoins em dinheiro real geralmente implica na utilização de corretores estrangeiros, cuja reputação ainda é desconhecida. Além disso os tribunais terão grande dificuldade em compreender o conceito de uma moeda criptográfica.
 
 Uma questão essencial do Bitcoin, é a falta do lastro governamental, ou seja, a garantia para ser aceito no pagamento de dívidas. Para possuir valor real é necessário encontrar organizações dispostas a trocar BTCs por outras moedas, ou haver uma ampla gama de serviços e produtos à venda em Bitcoins como em \cite{trade}.
 
-\section{Geração de Bitcoins}
+\section*{Geração de Bitcoins}
 O número total de bitcoins aumenta num total pré-estabelecido até o limite de e cada vez o bloco é adicionado a cadeia. Estes novos bitcoins são dados para quem resolver o problema computacional da prova de trabalho. Para criar novas moedas é necessário que seja a primeira transação de um bloco.
 \subsection*{Mineração}
-A mineração server para criar o registro de transações na rede e prover segurança. Inicialmente para ser executado em computadores pessoais, atualmente exitem dezenas de empresas e pools que detem grande parte da rede, abaixo \ref{pools} o gráfico retirado de \cite{pools}. Além disso houveram muitos avanços na construção de hardwares especializados para mineração.
+O processo de mineração de Bitcoins serve para criar o registro de transações na rede e prover segurança. Inicialmente para ser executado em computadores pessoais.
+
+Hoje é muito dificil minerar Bitcoins sozinho em casa, já que exitem dezenas de empresas e \textit{pools} que detem grande parte da rede, abaixo \ref{pools} o gráfico retirado de \cite{pools}. Além disso houveram muitos avanços na construção de hardwares especializados para mineração.
 
 \begin{figure}[H]
    \label{pools}
@@ -183,13 +188,15 @@ A mineração server para criar o registro de transações na rede e prover segu
    \caption{Hashrate distribution retirado de \cite{pools}.}
 \end{figure}
 
-O sistema reajusta o nível de dificuldade de criptografia de acordo com o processamento coletivo da rede, portanto, quanto mais perto chegar desse número, mais difícil será conseguir BTC na mineração virtual. Abaixo a tabela \ref{compare} comparação de velocidade e entre computadores pessoais, GPUS, FPGAS e ASIC para calcular hashs.
+O sistema reajusta o nível de dificuldade de criptografia de acordo com o processamento coletivo da rede, portanto, quanto mais perto chegar desse número, mais difícil será conseguir BTC na mineração virtual.
+
+Abaixo a tabela \ref{compare} comparação de velocidade e entre computadores pessoais, GPUS, FPGAS e ASIC para calcular hashs. O calculo utilizou com base a dificuldade atual que é de 16818461371.1610 e 25 bitcoins por bloco.
 
 \begin{table}[!ht]
 \centering
 \label{compare}
 \scriptsize
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{HW} & \textbf{Mhash/s} & \textbf{Days to gerenate one block} \\ \hline
 CPU Pentium III & 0.39 & 2200132235.6 \\ \hline
@@ -209,44 +216,42 @@ ASIC Minerscube & 15000000 & 55.7 \\ \hline
 
 Existem serviços de câmbio do Bitcoin para diversas moedas inclusive para outras \textit{crypto-currences}.
 
-O \cite{trade} possui uma extensa lista dos bens de consumo possíveis de serem comprados por Bitcoins. A primeira casa de câmbio no brasil que faz troca em diversas moedas é \cite{primeira}.
+O \cite{trade} possui uma extensa lista dos bens de consumo possíveis de serem comprados por Bitcoins.
 
 \section*{Carteira Digital}
-A carteira é um arquivo na qual contem uma coleção de chaves privadas. Ao entrar na comunidade monetária, seus ganhos serão armazenados em uma carteira virtual, um  número arbitrário de chaves que vão identificar suas transações. A responsabilidade de guardar a carteira é do usuário, existem diversos serviços para armazenamento remoto \cite{remoteWallet}.
+A carteira é um arquivo na qual contem uma coleção de chaves privadas. Ao entrar na comunidade monetária, seus ganhos serão armazenados em uma carteira virtual, um  número arbitrário de chaves que vão identificar suas transações. A responsabilidade de guardar a carteira é do usuário, existem diversos serviços para armazenamento remoto, como o Blockchain.
 
 Existe um formato chamado WIF, Wallet Import Format, que é uma forma de codificar uma chave privada ECDSA de forma mais fácil para copiar \cite{wif}. 
 
-\section*{Crítica}
+Existe também iniciativas para armazenamento em hardware com Pi Wallet, TREZOR e BitcoinCard entre outros disponiveis em \cite{hardWallet}
 
-\subsection*{Problemas}
+\section*{Problemas}
 Utilizando como base \cite{hardProblems}, os principais problemas do Bitcoin são:
 
 \begin{description}
 \item[Espaço de armazenamento:] todos os nós precisam armazenar todas as transações.
 \item[Centralização da mineração:] monopolização da rede de grandes pools \cite{pools}.
-\item[Gasto inútil de energia:] a prova de trabalho do Bitcoin é inútil, já que encontrar uma sequencia de zero bits no início de um hash não é utilizado para nada. Um exemplo de utilização da prova de trabalho é o que faz a moeda Primecoin, aonde a \textit{proof-of-work} é encontrar sequências de números primos.
+\item[Gasto inútil de energia:] a prova de trabalho do Bitcoin é inútil, já que encontrar uma sequencia de zero bits no início de um hash não é utilizado para nada. 
 
 \item[Instabilidade no valor:] Bitcoin reduz o suprimento exponencialmente, a demanda é volátil mas o suprimento é pré-determinado, isto faz com que o valor flutue demais, podendo trazer perdas em negociações.
-    \end{description}
-
-\subsection*{Benefícios}
-\begin{description}
-    \item[Aberta:] pode ser útil para pessoas em países totalitários que precisam de privacidade, por exemplo. 
-
-\item[Redução de custos:] não existe taxa de uma Instituição, como um banco, pois a responsabilidade de manter a carteira é do próprio usuário.
-\item[Microtransações:] não existe um valor mínimo de pagamentos para serviços diversos, habilitadas através da redução de custos.
 \end{description}
 
-\subsection*{Presente}
+\section*{Benefícios}
+\begin{description}
+\item[Aberta:] pode ser útil para pessoas em países totalitários que precisam de privacidade, por exemplo. 
+\item[Redução de custos:] não existe uma Instituição, como um banco, pois a responsabilidade de manter a carteira é do próprio usuário e a validação e feita pela rede.
+\item[Microtransações:] geralmente não é cobrado um valor na transação podendo ser utilizado valores mínimos para diversos serviços, habilitadas através da redução de custos.
+\end{description}
+
+\section*{Presente}
 O atual valor de mercado do Bitcoin medido em dólares americanos é 8,058,733,725.
-A Microsoft publicou \cite{bing} através do Bing uma ferramenta para conversão automática de valores de Bitcoin para d
+A Microsoft publicou \cite{bing} através do Bing uma ferramenta para conversão automática de valores de Bitcoin para outras moedas. Já existe uma casa de câmbio em funcionamento no Brasil, foi inaugurada em Curitiba e faz troca em diversas moedas. 
 
-\cite{realTime}
-\subsection*{Futuro}
+\section*{Futuro}
 
-\textit{Proof-of-excelence}
+Moedas baseadas no Bitcoin porém utilizando diferentes algoritmos para validar as transações, além de estratégias para minimizar os problemas já reconhecidos do Bitcoin. Um exemplo é a moeda Primecoin que utilização da prova de trabalho baseada em econtrar sequências de números primos.
 
-\textit{Human laboor}
+O New Economic Moviment \cite{nem}, propõe uma moeda aonde a validação do trabalho utiliza um conceito de \textit{proof-of-excelence} aonde pessoas pessoas ricas ou que adotaram a tecnologia antes não tem vantagens em adquirir moedas, mas quem realmente executa uma tarefa que beneficia a comunidade.
 
 
 \bibliography{relatorio}{}
