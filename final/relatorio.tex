@@ -107,14 +107,14 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \title{Bitcoin}
 
 \section*{Definição}
+O Bitcoin é uma moeda digital onde transações são enviados diretamente de uma parte a outra e utiliza algoritmos criptográficos para validar as transações e meios de recompensa para reduzir os ataques. Ao contrário das transações tradicionais que utilizam instituições financeiras como terceiro confiável no processo de pagamento eletrônico, a rede utiliza os próprios nós da rede para validação. 
 
-O Bitcoin é uma moeda digital onde transações são enviados diretamente de uma parte a outra e utiliza algoritmos criptográficos para validar as transações e meios de recompensa para reduzir os ataques. Ao contrário das transações tradicionais que utilizam instituições financeiras como terceiro confiável no processo de pagamento eletrônico. Desta forma reduz custos entre transações e habilita tipos microtransações que não eram possíveis devido ao alto custo relativo.
+Desenvolvida pelo programador Satoshi Nakamoto em 2008, o Bitcoin surgiu com o diferencial de ser uma moeda eletrônica que pode ser utilizada fora do ambiente virtual, ao contrário de moedas virtuais no Second Life, World of Warcraft, por exemplo.
 
-Para prevenir o problema de duplo gasto, o Bitcoin propõe um servidor timestamp duma rede distribuída peer-to-peer que gere um uma ordem cronológica das transações. O sistema é seguro enquanto os nós honestos coletivamente controlarem mais CPU power que um grupo de atacantes. A idéia é fomentar nodos que ajudem a validar as transações, não precisando de uma instituição que garanta que não haja duplo-pagamento.
-\cite{nakamoto2008bitcoin}
-\section*{Moeda}
+O Bitcoin não é totalmente anômimo, pois armazena publicamente e permanentemente as transações da rede, ou seja qualquer um pode verificar o balanço das transações para cada endereço. A identidade do usuário permanece desconhecida até ser revelada durante uma transação. Existe um número máximo de 2,099,999,997,690,000 bitcoins.
+
+\section*{Cadeia de blocos}
 A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda assina publicamente um hash da transação antiga e a chave pública do próximo dono e adiciona isso no final de cada moeda. Existe um problema na qual o pagador não pode verificar se o atual dono não gastou duplamente a moeda. Abaixo \ref{bitcoin} uma visão geral do Bitcoin.
-
 
 \begin{figure}[H]
    \label{bitcoin}
@@ -124,6 +124,9 @@ A moeda é uma cadeia de assinatura digitais, cada dono que transfere a moeda as
 \end{figure}
 
 \section*{Transações}
+
+Uma transação inicia-se em poucos segundos e é confirmada geralmente em 10 minutos. Durante esse tempo a transação pode ser autenticada porém ainda reversível. As transações depois de confirmadas por grande parte dos nós honestos não podem ser revertidas, portanto é necessário confiar no futuro dono da moeda.
+
 Para resolver o problema do gasto duplo o Bitcoin, as transações são publicamente anunciadas e são necessários participantes que concordem em uma história única da ordem em que são recebidas. O futuro dono precisa da prova que no momento da transação a maioria dos nós concordam que é o primeiro pagamento desta moeda do dono.
 
 Para cifrar as transações o algoritmo utilizado é o  ECDSA, Assinatura Digital de Curvas Elípticas, assinando a alteração da propriedade possui as entradas: registros das transações antigas e a saída é um registro determinando o novo dono do Bitcoin, que será utilizado como entrada para futuras transações, abaixo um exemplo.
@@ -143,9 +146,11 @@ OP_EQUALVERIFY OP_CHECKSIG
 
 A solução do Bitcoin utiliza um servidor de timestamp que funciona gerando um hash do bloco de itens e publica este hash. Cada timestamp inclue o timestamp anterior formando uma cadeia.
 
+Para prevenir o problema de duplo gasto, o Bitcoin propõe um servidor timestamp duma rede distribuída peer-to-peer que gere um uma ordem cronológica das transações. O sistema é seguro enquanto os nós honestos coletivamente controlarem mais CPU power que um grupo de atacantes. A idéia é fomentar nodos que ajudem a validar as transações, não precisando de uma instituição que garanta que não haja duplo-pagamento.
+
 Para implementar um servidor de timestamp distribuído é utilizado um sistema similar ao Hashcash, para proteger a rede e manter a rede decentralizada sem autoridade central. O trabalho requerido em média é exponencial ao número de bits zero. Uma vez que o trabalho satisfaz a prova de trabalho o bloco, a prova de trabalho é um voto por CPU.
 
-Para compensar o aumento da velocidade de hardware durante o tempo, a dificuldade da prova de trabalho pode ser determinada alterando o número médio de blocos por hora. Os passos para executar a rede são:
+Para compensar o aumento da velocidade de hardware durante o tempo, a dificuldade da \textit{proof-of-work}, prova de trabalho pode ser determinada alterando o número médio de blocos por hora. Os passos para executar a rede são:
 \begin{itemize}
     \item Novas transações são comunicadas para todos os nós.
     \item Cada nó coleta novas transações para o bloco.
@@ -155,37 +160,96 @@ Para compensar o aumento da velocidade de hardware durante o tempo, a dificuldad
     \item Nós expressam a aceitação do bloco criando no próximo bloco da cadeia usando o hash de aceitação do bloco anterior.
 \end{itemize}
 
-Os nós sempre consideram a cadeia mais longa como correta no caso de dois nós fizeram broadcast simultâneo de diferentes versões do próximo bloco. Alguns podem receber uma ou outra primeiro, neste caso ele trabalha na primeira recebida porém salva a próxima caso a cadeira se torne maior. O broadcast necessita alcançar um número minimo de nós.
+Os nós sempre consideram a cadeia mais longa como correta no caso de dois nós fizeram broadcast simultâneo de diferentes versões do próximo bloco. Alguns podem receber uma ou outra primeiro, neste caso ele trabalha na primeira recebida porém salva a próxima caso a cadeira se torne maior. O broadcast necessita alcançar um número minimo de nós \cite{nakamoto2008bitcoin}.
 
-\section*{Mineração}
-Para criar novas moedas é necessário que seja a primeira transação de um bloco.
-\section*{Monetização}
+\section*{Legislação}
+\subsection*{No Brasil}
+
+Não existe legislação específica e decisões tomadas pelos tribunais limitam-se a casos de cartões de crédito ou transações bancárias na Internet. Se ambas as partes concordam que determinado produto ou serviço será pago por meio de Bitcoins e não em moeda corrente, trata-se de um contrato entre elas, com plena validade legal \cite{pascale}.
+
+A conversão de Bitcoins em dinheiro real geralmente implica na utilização de corretores estrangeiros, cuja reputação ainda é desconhecida. Além disso os tribunais terão grande dificuldade em compreender o conceito de uma moeda criptográfica \cite{pascale}.
+
+Uma questão essencial do Bitcoin, é a falta do lastro governamental, ou seja, a garantia para ser aceito no pagamento de dívidas. Para possuir valor real é necessário encontrar organizações dispostas a trocar BTCs por outras moedas, ou haver uma ampla gama de serviços e produtos à venda em Bitcoins como em \cite{trade}.
+
+\section{Geração de Bitcoins}
+O número total de bitcoins aumenta num total pré-estabelecido até o limite de e cada vez o bloco é adicionado a cadeia. Estes novos bitcoins são dados para quem resolver o problema computacional da prova de trabalho. Para criar novas moedas é necessário que seja a primeira transação de um bloco.
+\subsection*{Mineração}
+A mineração server para criar o registro de transações na rede e prover segurança. Inicialmente para ser executado em computadores pessoais, atualmente exitem dezenas de empresas e pools que detem grande parte da rede, abaixo \ref{pools} o gráfico retirado de \cite{pools}. Além disso houveram muitos avanços na construção de hardwares especializados para mineração.
+
+\begin{figure}[H]
+   \label{pools}
+   \centering
+   \includegraphics[width=0.8\textwidth]{images/pools.png}
+   \caption{Hashrate distribution retirado de \cite{pools}.}
+\end{figure}
+
+O sistema reajusta o nível de dificuldade de criptografia de acordo com o processamento coletivo da rede, portanto, quanto mais perto chegar desse número, mais difícil será conseguir BTC na mineração virtual. Abaixo a tabela \ref{compare} comparação de velocidade e entre computadores pessoais, GPUS, FPGAS e ASIC para calcular hashs.
+
+\begin{table}[!ht]
+\centering
+\label{compare}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{HW} & \textbf{Mhash/s} & \textbf{Days to gerenate one block} \\ \hline
+CPU Pentium III & 0.39 & 2200132235.6 \\ \hline
+CPU Core i7 3930k & 66.6 & 12553307.0 \\ \hline
+GPU ATI 5850 & 432.15 & 1934629.8 \\ \hline
+GPU NVidia Tesla S2070 & 749.23 & 1115879.3 \\ \hline
+FPGA BitForce SHA256 Single & 832 & 1004868.1 \\ \hline
+GPU 6 x ATI 5850 & 2135 & 391592.6 \\ \hline
+FPGA KnCMiner Mars & 6000 & 139341.7 \\ \hline
+ASIC Avalon2 & 300000 & 27868.3 \\ \hline
+ASIC Minerscube & 15000000 & 55.7 \\ \hline  
+\end{tabular}
+\end{table}
+
+
+\section*{Monetização e comércio}
 
 Existem serviços de câmbio do Bitcoin para diversas moedas inclusive para outras \textit{crypto-currences}.
 
-Os o site \cite{trade} possui uma extensa lista dos bens de consumo possíveis de serem comprados por Bitcoins.
+O \cite{trade} possui uma extensa lista dos bens de consumo possíveis de serem comprados por Bitcoins. A primeira casa de câmbio no brasil que faz troca em diversas moedas é \cite{primeira}.
 
 \section*{Carteira Digital}
+A carteira é um arquivo na qual contem uma coleção de chaves privadas. Ao entrar na comunidade monetária, seus ganhos serão armazenados em uma carteira virtual, um  número arbitrário de chaves que vão identificar suas transações. A responsabilidade de guardar a carteira é do usuário, existem diversos serviços para armazenamento remoto \cite{remoteWallet}.
+
+Existe um formato chamado WIF, Wallet Import Format, que é uma forma de codificar uma chave privada ECDSA de forma mais fácil para copiar \cite{wif}. 
 
 \section*{Crítica}
 
-Os principais problemas do Bitcoin são:
+\subsection*{Problemas}
+Utilizando como base \cite{hardProblems}, os principais problemas do Bitcoin são:
 
 \begin{description}
 \item[Espaço de armazenamento:] todos os nós precisam armazenar todas as transações.
-\item[Centralização da mineração:] inicialmente pensado para ser executado em computaores pessoais. Hoje dezenas e empresas e 3 pools deteem mais de 50\% da rede. Além disso muitos avanços para construção de hardwares especializados para mineração.
+\item[Centralização da mineração:] monopolização da rede de grandes pools \cite{pools}.
+\item[Gasto inútil de energia:] a prova de trabalho do Bitcoin é inútil, já que encontrar uma sequencia de zero bits no início de um hash não é utilizado para nada. Um exemplo de utilização da prova de trabalho é o que faz a moeda Primecoin, aonde a \textit{proof-of-work} é encontrar sequências de números primos.
 
-\item[Gasto inútil de energia:] a prova de trabalho do Bitcoin é inútil, já que encontrar uma sequencia de zero bits no incio de um hash 256 não é utilizado para nada. Uma moeda como primecoin a prova de trabalho é encontrar sequências de números primos.
+\item[Instabilidade no valor:] Bitcoin reduz o suprimento exponencialmente, a demanda é volátil mas o suprimento é pré-determinado, isto faz com que o valor flutue demais, podendo trazer perdas em negociações.
+    \end{description}
 
-\item[Instabilidade no valor:] Bitcoin reduz o suprimento exponencialmente, a demanda é volátil mas o suprimento é pré-determinado, isto faz com que o valor flutue demais.
+\subsection*{Benefícios}
+\begin{description}
+    \item[Aberta:] pode ser útil para pessoas em países totalitários que precisam de privacidade, por exemplo. 
+
+\item[Redução de custos:] não existe taxa de uma Instituição, como um banco, pois a responsabilidade de manter a carteira é do próprio usuário.
+\item[Microtransações:] não existe um valor mínimo de pagamentos para serviços diversos, habilitadas através da redução de custos.
+\end{description}
+
+\subsection*{Presente}
+O atual valor de mercado do Bitcoin medido em dólares americanos é 8,058,733,725.
+A Microsoft publicou \cite{bing} através do Bing uma ferramenta para conversão automática de valores de Bitcoin para d
+
+\cite{realTime}
+\subsection*{Futuro}
+
+\textit{Proof-of-excelence}
+
+\textit{Human laboor}
 
 
 \bibliography{relatorio}{}
-http://news.slashdot.org/story/14/01/07/2134242/how-to-create-your-own-cryptocurrency
-http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/
-https://en.bitcoin.it/wiki
-http://www.ournem.com
-
 \bibliographystyle{plain}
 
 \end{document}
