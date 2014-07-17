@@ -9,3 +9,6 @@ clean:
 
 run:
 	evince $(PROJECT).pdf &
+
+minning:
+	./poclbm.py  stratum://18firgLYHgebHbEyudWC8t1DVaxUAasx9o:@stratum.mining.eligius.st:3334
