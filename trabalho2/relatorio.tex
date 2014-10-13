@@ -98,26 +98,25 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \author{Rafael de Lucena Valle, Universidade Federal de Santa Catarina}
 
-\date{26/05/2014}
+\date{10/10/2014}
 
 \maketitle
 
 \section*{Teste de Primalidade de Miller Rabin}
-Números primos são muito utilizados em sistemas de segurança computacional. Entretanto, eles são somente úteis se tiverem centenas de dígitos. Não se conhece um método para gerar diretamente números primos grandes, mas existem métodos para se verificar, alguns probabilísticos, se um dado número grande é primo.
-Dentre os probabilísticos, um dos mais conhecidos e usados é o teste de primalidade de Miller-Rabin, que utiliza as propriedades dos pseudoprimos de Fermat.
+Números primos são muito utilizados em sistemas de segurança computacional, entretanto são somente úteis se tiverem centenas de dígitos. Não se conhece um método rápido para gerar diretamente números primos grandes, mas existem métodos para se verificar, alguns probabilísticos, se um dado número grande é primo. Dentre os probabilísticos, um dos mais conhecidos e usados é o teste de primalidade de Miller-Rabin, que utiliza as propriedades dos pseudoprimos de Fermat.
 
 
 \section*{Algoritmo}
-\begin{itemize}
-    \item Dado um numero inteiro impar n, represento-o de forma fatorada em $(2^r)*s + 1$ com s sendo primo.
+\begin{enumerate}
+    \item Dado um numero inteiro impar n, represento-o de forma fatorada em $(2^r)*s + 1$ com $s$ sendo primo.
     \item Escolhe-se um numero randomico a numa faixa de 2 ate n-1.
     \item Testo as condições $a^s = 1 \mod n$ ou $a^2js = -1 \mod n$ para cada $j | 0 <= j <= r-1$
-\end{itemize}
-Um número primo vai passar nos testes para todo valor a. Se não encontrar nenhum valor nesta faixa é provavel que seja um número composto.
+    \item Um número primo vai passar nos testes para todo valor a, se não encontrar nenhum valor nesta faixa é provavel que seja um número composto.
+\end{enumerate}
 
 \section*{Exemplos}
 
-Para ilustrar a execução do algoritmo, vou mostrar um número composto 3 um número primo.
+Para ilustrar a execução do algoritmo, vou mostrar um número composto 33 e o número primo 7.
 
 \subsection*{Número composto}
 Verificar se 33 é primo. decompondo 33 na forma de $(2^r)*s + 1$ com r ímpar:\\
@@ -218,15 +217,20 @@ def checkIsPrime():
     else:
         print "\n\tThis is a compose number!\n"
 
+def randomWithNDigits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return random.randint(range_start, range_end)
+
 def generateRandomPrime():
-    bits = int(raw_input("Give the size of random number in bits: "))
-    if bits < 2:
-        print("\tMust be 2 bits or more!\n")
+    digit = int(raw_input("Give the number of digits to create a random number: "))
+    if digit < 1:
+        print("\tMust be 1 digits or more!\n")
         return
     precision = int(raw_input("Which precision to test primality? "))
-    random_number = random.getrandbits(bits)
+    random_number = randomWithNDigits(digit)
     while (probablyPrime(random_number, precision) == False):
-        random_number = random.getrandbits(bits)
+        random_number = randomWithNDigits(digit);
     print "\tThe random number probably prime is: ", random_number, "\n\n"
 
 def main():
@@ -249,14 +253,20 @@ if __name__ == '__main__':
     main()
 \end{lstlisting}
 
-Following Listing~\ref{list:first}\ldots{} 
-
 \section*{Execução}
 
 Para executar o script basta abrir um terminal e utilizar um shell tipo o bash, o script é interativo.
 
 \begin{lstlisting}[label={list:second},caption=Executando o script.]
 python miller_rabin.py
+
+---- Miller Rabin Primality Test ----
+Type random will try generates a random or prime for check if is prime
+
+Choose random, prime or exit: random
+Give the number of digits to create a random number: 200
+Which precision to test primality? 100
+    The random number probably prime is:  97427930850631007209932373111538240078238894443678593158471002592221782922131726207485466701550329045372339100590141645341390171807569749429398142665275255472653515797800907674306966481588454740955683
 \end{lstlisting}
 
 \end{document}

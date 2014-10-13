@@ -61,15 +61,20 @@ def checkIsPrime():
     else:
         print "\n\tThis is a compose number!\n"
 
+def randomWithNDigits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return random.randint(range_start, range_end)
+
 def generateRandomPrime():
-    bits = int(raw_input("Give the size of random number in bits: "))
-    if bits < 2:
-        print("\tMust be 2 bits or more!\n")
+    digit = int(raw_input("Give the number of digits to create a random number: "))
+    if digit < 1:
+        print("\tMust be 1 digits or more!\n")
         return
     precision = int(raw_input("Which precision to test primality? "))
-    random_number = random.getrandbits(bits)
+    random_number = randomWithNDigits(digit)
     while (probablyPrime(random_number, precision) == False):
-        random_number = random.getrandbits(bits)
+        random_number = randomWithNDigits(digit);
     print "\tThe random number probably prime is: ", random_number, "\n\n"
 
 def main():
