@@ -98,7 +98,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \author{Rafael de Lucena Valle, Universidade Federal de Santa Catarina}
 
-\date{16/06/2014}
+\date{\today}
 
 \maketitle
 
@@ -109,15 +109,15 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 Geração de Chaves
 
 1) Escolho dois números primos grandes, $P$ and $Q$.
-Fazemos isso utilizando utilizando a geração de números randômicos no Python e o teste de primalidade de Miller Rabin.
+Fazemos isso utilizando utilizando a geração de números randômicos e o teste de primalidade de Miller Rabin.
 
 2) Calculamos $N = P*Q$
 
-3) Calculamos $M$ sendo o totiente de $P$ * totiente $Q$, assim $M = (P - 1)*(Q - 1)$
+3) Calculamos $M = \Phi($P * Q$) = \Phi(P) * \Phi(Q)$,  $P$ e $Q$ primos, assim: $M = (P - 1)*(Q - 1)$
 
 4) Escolhemos um número $E$ coprimo a $M$, ou seja o máximo divisor comum igual a 1, utilizamos o algoritmo de Euclides. Para fazer estes calculos com números grandes é necessário utilizar o algoritmo extendido de Euclides, que recebe dois inteiros positivos $a, b$ as e retorna uma tripla $(g, x, y)$, tal que $ax + by = g = gcd(a, b)$.
 
-5) Encontro $D$, tal que $D \bmod M = 1$, isto é equivalente a encontrar $D$ que satisfaça $D*E = 1 + X*M$, aonde $X$ é qualquer inteiro. Podemos reescrever a fórmula de modo $D = (1 + X*M) / E$.
+5) Encontro $D = E^{-1} \bmod M$, isto é equivalente a encontrar $D$ que satisfaça $D*E = 1 + X*M$, aonde $X$ é qualquer inteiro. Podemos reescrever a fórmula de modo $D = (1 + X*M) / E$.
 
 Ao final $D$ será a chave privada e $E$ será a chave pública. O número a ser criptografado deve ser menor que $P$ e $Q$.\\
 
@@ -156,7 +156,7 @@ $Z = C^D \bmod N$\\
 $2 = 8^7 \bmod 33 = 2$
 
 \section*{Código}
-\begin{lstlisting}[label={list:first},Programa desenvolvido.]
+\begin{lstlisting}[]
 import random
 import copy
 
@@ -359,8 +359,8 @@ if __name__=='__main__':
     print ('Private Key d = {0}'.format(d))
     cipher = encrypt(message, n, e, len(message))
     print('The Cipher is = {0}'.format(cipher[0]))
-    Amessage = decrypt(cipher, n, d, len(message))
-    print 'The Decrypt message is: ', Amessage
+    newMessage = decrypt(cipher, n, d, len(message))
+    print 'The Decrypt message is: ', newMessage
 \end{lstlisting}
 
 \section*{Execução}
@@ -371,13 +371,12 @@ Para executar o script basta abrir um terminal e utilizar um shell tipo o bash, 
 python rsa.py 
 Give the size of random number in digits: 30
 Which precision to test primality? 50
-Which message to be used? Isto é um teste! 
-n = 371096081018060588652374917330230824164622424249316994756353
-Public Key e = 281735576722332684631051115473406185858688049672232384646443
-Private Key d = 299445565142516698533863189560139387412690109841262390990867
-The Cipher is = 284188417087299086212252181551495288427589837682104905135909
-The Decrypt message is:  Isto é um teste!
-
+Which message to be used? Testando RSA
+n = 151526492629643894314220035002218374891944165597499884996911
+Public Key e = 108451208136200938592600328144194051182428384664500311106857
+Private Key d = 32185421199500152036676547082383455480022805649961402498569
+The Cipher is = 117137340459652070495657539285125162635569908944187313923826
+The Decrypt message is:  Testando RSA
 \end{lstlisting}
 
 \end{document}

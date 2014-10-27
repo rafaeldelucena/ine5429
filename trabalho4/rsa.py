@@ -200,5 +200,5 @@ if __name__=='__main__':
     print ('Private Key d = {0}'.format(d))
     cipher = encrypt(message, n, e, len(message))
     print('The Cipher is = {0}'.format(cipher[0]))
-    Amessage = decrypt(cipher, n, d, len(message))
-    print 'The Decrypt message is: ', Amessage
+    newMessage = decrypt(cipher, n, d, len(message))
+    print 'The Decrypt message is: ', newMessage
