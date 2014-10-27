@@ -1,5 +1,4 @@
 import random
-import math
 import copy
 
 """
@@ -14,18 +13,31 @@ def decomposeBaseTwo(n):
     return exponentOfTwo, n
 
 """
+Exponenciacao binaria, baseado no pseudo-codigo do livro Applied Cryptography do Bruce Schneier.
+"""
+def modularPow(base, exp, modu):
+    res = 1
+    base = base % modu
+    while exp > 0:
+        if (exp % 2) == 1:
+            res = (res * base) % modu
+        exp = exp / 2
+        base = (base * base) % modu
+    return res
+
+"""
 Verifica as condicoes
     Se (a^s === 1 (mod n) ou a^2js === -1 (mod n) 
     para um j | 0 <= j <= r-1
 """
 def fillPrimeConditions(candidateNumber, p, exponent, remainder):
-   candidateNumber = pow(candidateNumber, remainder, p)
+   candidateNumber = modularPow(candidateNumber, remainder, p)
  
    if candidateNumber == 1 or candidateNumber == p - 1:
       return False
  
    for _ in range(exponent):
-      candidateNumber = pow(candidateNumber, 2, p)
+      candidateNumber = modularPow(candidateNumber, 2, p)
  
       if candidateNumber == p - 1:
          return False
@@ -89,11 +101,15 @@ def multiplicativeInverse(a, m):
         linearcombination = extendedEuclid(a, m)
         return linearcombination[1] % m
 
+def randomWithNDigits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return random.randint(range_start, range_end)
 
-def generateRandomPrime(bits, precision):
-    random_number = random.getrandbits(bits)
+def generateRandomPrime(digits, precision):
+    random_number = randomWithNDigits(digits)
     while (probablyPrime(random_number, precision) == False):
-        random_number = random.getrandbits(bits)
+        random_number = randomWithNDigits(digits)
     return random_number
 
 ''' Try to find a large pseudo primes and generate public and private keys for RSA encryption.'''
@@ -161,7 +177,7 @@ def encrypt(message, modN, e, blockSize):
     numList = string2numList(message)
     numBlocks = numList2blocks(numList, blockSize)
     for blocks in numBlocks:
-        cipher.append(pow(blocks, e, modN))
+        cipher.append(modularPow(blocks, e, modN))
     return cipher
 
 '''reverse function of encrypt'''
@@ -169,20 +185,20 @@ def decrypt(secret, modN, d, blockSize):
     numBlocks = []
     numList = []
     for blocks in secret:
-        numBlocks.append(pow(blocks, d, modN))
+        numBlocks.append(modularPow(blocks, d, modN))
     numList = blocks2numList(numBlocks, blockSize)
     message = numList2string(numList)
     return message
 
 if __name__=='__main__':
-    bits = int(raw_input("Give the size of random number in bits: "))
+    digits = int(raw_input("Give the size of random number in digits: "))
     precision = int(raw_input("Which precision to test primality? "))
     message = raw_input("Which message to be used? ")
-    (n, e, d) = generateKeys(bits, precision)
+    (n, e, d) = generateKeys(digits, precision)
     print ('n = {0}'.format(n))
     print ('Public Key e = {0}'.format(e))
     print ('Private Key d = {0}'.format(d))
     cipher = encrypt(message, n, e, len(message))
-    print(cipher)
+    print('The Cipher is = {0}'.format(cipher[0]))
     Amessage = decrypt(cipher, n, d, len(message))
-    print('The decrypt message is: ', Amessage)
+    print 'The Decrypt message is: ', Amessage
