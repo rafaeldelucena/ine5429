@@ -1,6 +1,6 @@
 # Encryption Algorithms in Python
 
-Codes for some computer security lessons
+Some code for Crytography lessons from Computer Science at https://ufsc.br
 
 ## Trabalho 1
 Primitive Roots
